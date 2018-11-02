@@ -1,6 +1,7 @@
 # Description
 
 **Topic:** Task scheduler
+
 **Implementation:** Java
 
 ## The Problem
@@ -17,10 +18,11 @@ The project will utilize the basic data structures found in Java.
 	- Earliest Due Date
 	- Shortest Processing Time
 	- Moore-Hodgson Algorithm
+	
 **Note:** *The preceding would require implementing a sorting algorithm and a deadline system!*
 - Multiple objectives: E.g. Try to maximize profits while minimizing stress levels.
 
-## Sources
+## References
 - https://en.wikipedia.org/wiki/Knapsack_problem
 - http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf
 - https://www.tutorialspoint.com/design_and_analysis_of_algorithms/design_and_analysis_of_algorithms_01_knapsack.htm
