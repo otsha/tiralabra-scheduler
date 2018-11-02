@@ -1,29 +1,57 @@
 # Description
 
-**Topic:** Task scheduler
+**Topic:** Task scheduling analyzer
 
 **Implementation:** Java
 
 ## The Problem
-A freelancer has x hours of working time with n tasks to complete. Each task is estimated to take a certain amount of time and has a some kind of monetary value attached to it. Which tasks should the freelancer complete to maximize their profits?
+A freelancer has n work-related tasks or projects to complete. Each task has a deadline, is estimated to take a certain amount of time and has a some kind of monetary value attached to it. In which order should the freelancer complete the tasks?
 
-## The Algorithm
-The problem above can be solved using the optimal known solution for the **0/1 Knapsack problem**, which has a worst-case time and space complexity scenario of **O(nW)**, where n is the total number of possible tasks to be completed, and W is the maximum weight - in this case the maximum working time - that must not be surpassed.
+## The Solution
+There is no single optimal solution for the problem, as it can be observed with multiple different objectives in mind. It can, however, be modeled as a case of single-machine scheduling. Thus, we can either:
+
+- Minimize the lateness of the single most overdue project
+- Minimize the overall lateness of all projects in total
+- Complete the highest-value tasks first
+- Minimize the number of projects that will be overdue
+	
+## The Software
+The application should allow the user to:
+	
+- [ ] Add and remove tasks
+- [ ] Schedule tasks using one of the optimization methods
+- [ ] View and compare schedules produced by different optimiaztion methods
+
+## The Algorithm(s)
+As mentioned, the problem can be examined as a case of single-machine scheduling. To optimize for each of the four different perspectives above, we will use:
+
+- Earliest Due Date (EDD)
+	- Sort the tasks in an ascending order from the earliest deadline to the last deadline
+- Shortest Processing Time (SPT)
+	- Sort the tasks in an ascending order from the quickest to the slowest in terms of completion time
+- Weighed Shortest Processing Time
+	- Similar to SPT: First, each task is assigned a standardized value (hourly rate). Then, the tasks are picked in a descending order from the highest value to the lowest.
+- Moore-Hodgson Algorithm
+	- Sort the tasks in an ascending order (like in EDD), then go through them, and whenever a new task is encountered that is likely to be left unfinished, 'discard' the most time-demanding already scheduled task.
+
+For the first three cases, the time complexities will be that of the sorting algorithm used. If we decide to use priority queues, the time complexity will be O(```n * heap-insert```) = O(nlogn).
+
+As Moore-Hodgson's algorithm requires the use of a priority queue, its worst-case time complexity is also O(nlogn).
 
 ## Data Structures
-The project will utilize the basic data structures found in Java.
+The list of tasks used by EDD and SPT can be implemented with either priority queues or lists sorted by a sorting algorithm. However, the Moore-Hodgson Algorithm explicitly requires a priority queue. Therefore the best solution would be to only implement a priority queue. As the project progresses, this might change.
 
-## Ideas for Further Development (Bonuses)
-- Comparison with computationally easier scheduling heuristics, such as:
-	- Earliest Due Date
-	- Shortest Processing Time
-	- Moore-Hodgson Algorithm
-	
-**Note:** *The preceding would require implementing a sorting algorithm and a deadline system!*
-- Multiple objectives: E.g. Try to maximize profits while minimizing stress levels.
+The worst-case scenario time complexities for a priority queue implemented with a binary heap:
+
+- ```find-min/max``` -> O(1)
+- ```delete-min/max``` -> O(logn)
+- ```insert``` -> O(logn)
+
+There should be no need for the ```decrease-key``` or ```merge``` operations.
 
 ## References
-- https://en.wikipedia.org/wiki/Knapsack_problem
-- http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf
-- https://www.tutorialspoint.com/design_and_analysis_of_algorithms/design_and_analysis_of_algorithms_01_knapsack.htm
-- https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
+- https://en.wikipedia.org/wiki/Single-machine_scheduling
+- Christian, B. & Griffiths, T. : *Algorithms to Live By - The Computer Science of Human Decisions*, pp. 105-113, Harper Collins (2016)
+- [Lawler, E. L. : *Knapsack-Like Scheduling Problems, the Moore-Hodgson Algorithm and the 'Tower of Sets' Property*, Mathematical and Computer Modelling, vol. 20, issue 2, pp. 91-106, Elsevier (1994)](https://www.sciencedirect.com/science/article/pii/0895717794902097)
+- https://en.wikipedia.org/wiki/Priority_queue
+- https://en.wikipedia.org/wiki/Binary_heap
