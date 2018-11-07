@@ -35,12 +35,17 @@ public class Task implements Comparable<Task> {
         return timeEstimate;
     }
 
+    /**
+     * Attempts to parse a valid date from the inputted String.
+     *
+     * @todo Separate date handling to a new class.
+     *
+     * @return The deadline of the project as Date.
+     */
     public Date deadlineAsDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date deadlineAsDate = null;
 
-        // Parse a valid Date from the String input
-        // TODO: Create a new class to handle this
         try {
             deadlineAsDate = dateFormat.parse(deadline);
         } catch (ParseException e) {
@@ -50,10 +55,23 @@ public class Task implements Comparable<Task> {
         return deadlineAsDate;
     }
 
+    /**
+     * Divides the task's payment by the estimation of the time it is going to
+     * take, in order to produce a standardised hourly rate for the task.
+     *
+     * @return The task's hourly rate
+     */
     public double getHourlyRate() {
         return payment / timeEstimate;
     }
 
+    /**
+     * Compares the current date to the task's deadline.
+     *
+     * @todo Separate date handling to a new class.
+     *
+     * @return The number of days until the task's deadline.
+     */
     public long daysRemaining() {
         Date currentDate = new Date();
         long difference = deadlineAsDate().getTime() - currentDate.getTime();
@@ -71,6 +89,15 @@ public class Task implements Comparable<Task> {
 
         return s;
     }
+    
+    /**
+     * Compares the task's time estimation with another task.
+     * 
+     * @todo Separate this functionality into a SPT comparator class.
+     * 
+     * @param o
+     * @return 1 if task o takes longer, -1 if less, 0 if the tasks are equal.
+     */
 
     @Override
     public int compareTo(Task o) {

@@ -1,4 +1,5 @@
 /tiralabra-scheduler/.nb-gradle/
 /tiralabra-scheduler/.gradle/
 /tiralabra-scheduler/build/
+/tiralabra-scheduler/.nb-gradle-properties
 *.tmp

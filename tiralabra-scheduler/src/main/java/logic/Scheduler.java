@@ -17,7 +17,16 @@ public class Scheduler {
         this.queue = new PriorityQueue<>();
     }
 
-    public void schedule() {
+    /**
+     * Minimizes the number of tasks that will be overdue using the
+     * Moore-Hodgson Algorithm.
+     *
+     * @todo Implementation using own data structures 
+     * 
+     * @return The Scheduled list of tasks.
+     */
+    
+    public List<Task> mooreHodgson() {
         System.out.println("MOORE-HODGSON:");
         // Moore-Hodgson
         // TO-DO: Implement using own data structures
@@ -70,17 +79,6 @@ public class Scheduler {
             Task t = schedule.get(i);
             System.out.println(t.getName() + " // " + t.getDeadline());
         }
+        return schedule;
     }
-
-    public Task[] getTasks() {
-        int size = queue.size();
-        Task[] all = new Task[size];
-
-        for (int i = 0; i < size; i++) {
-            all[i] = queue.poll();
-        }
-
-        return all;
-    }
-
 }

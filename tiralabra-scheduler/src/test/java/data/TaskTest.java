@@ -17,10 +17,10 @@ public class TaskTest {
     private Task t;
 
     public TaskTest() {
-        String name = "testTask";
-        Double payment = 2550.27;
-        String deadline = "21.12.2018";
-        int timeEstimate = 52;
+        name = "testTask";
+        payment = 2550.27;
+        deadline = "21.12.2018";
+        timeEstimate = 52;
     }
 
     @Before

@@ -4,7 +4,6 @@ import data.Task;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
 import logic.EDDComparator;
 import logic.Scheduler;
@@ -18,7 +17,7 @@ class Main {
 
         List<Task> tasks = new ArrayList<>();
 
-        // TEST DATA
+        // TEST/DEMO DATA
         // Fastest: wow
         // Slowest: infinity
         // EDD: homework
@@ -104,7 +103,7 @@ class Main {
                 
                 System.out.println("----------------");
                 Scheduler s = new Scheduler(tasks);
-                s.schedule();
+                s.mooreHodgson();
                 
             } else {
                 // ERROR FOR INVALID COMMAND
