@@ -78,4 +78,16 @@ public class TaskTest {
         
         assertEquals(remaining, t.daysRemaining());
     }
+    
+    @Test
+    public void toStringReturnsACorrectRepresentation() {
+        String taskString = "Name: " + name + "\n"
+                + "Payment: " + payment + "\n"
+                + "Deadline: " + deadline + "\n"
+                + "Days remaining: " + t.daysRemaining() + "\n"
+                + "Estimated time taken: " + timeEstimate + "\n"
+                + "Hourly rate: " + t.getHourlyRate();
+        
+        assertEquals(taskString, t.toString());
+    }
 }
