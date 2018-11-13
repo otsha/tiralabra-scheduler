@@ -1,9 +1,7 @@
 package data;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import logic.DateHandler;
 
 public class Task implements Comparable<Task> {
 
@@ -36,23 +34,15 @@ public class Task implements Comparable<Task> {
     }
 
     /**
-     * Attempts to parse a valid date from the inputted String.
+     * Parses a date out of the String-format deadline.
      *
-     * @todo Separate date handling to a new class.
+     * @see logic.DateHandler
      *
      * @return The deadline of the project as Date.
      */
     public Date deadlineAsDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        Date deadlineAsDate = null;
-
-        try {
-            deadlineAsDate = dateFormat.parse(deadline);
-        } catch (ParseException e) {
-            System.out.println("ERROR: Invalid date format");
-        }
-
-        return deadlineAsDate;
+        DateHandler dh = new DateHandler();
+        return dh.validate(deadline);
     }
 
     /**
@@ -68,14 +58,13 @@ public class Task implements Comparable<Task> {
     /**
      * Compares the current date to the task's deadline.
      *
-     * @todo Separate date handling to a new class.
+     * @see logic.DateHandler
      *
      * @return The number of days until the task's deadline.
      */
     public long daysRemaining() {
-        Date currentDate = new Date();
-        long difference = deadlineAsDate().getTime() - currentDate.getTime();
-        return TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
+        DateHandler dh = new DateHandler();
+        return dh.daysFromToday(deadlineAsDate());
     }
 
     @Override
@@ -89,16 +78,15 @@ public class Task implements Comparable<Task> {
 
         return s;
     }
-    
+
     /**
      * Compares the task's time estimation with another task.
-     * 
+     *
      * @todo Separate this functionality into a SPT comparator class.
-     * 
+     *
      * @param o
      * @return 1 if task o takes longer, -1 if less, 0 if the tasks are equal.
      */
-
     @Override
     public int compareTo(Task o) {
         if (timeEstimate > o.getTimeEstimate()) {

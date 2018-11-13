@@ -22,6 +22,7 @@ public class Scheduler {
      * Moore-Hodgson Algorithm.
      *
      * @todo Implementation using own data structures 
+     * @todo Remove the UI printouts
      * 
      * @return The Scheduled list of tasks.
      */
