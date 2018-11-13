@@ -14,29 +14,12 @@ class Main {
     public static void main(String[] args) {
 
         TaskList tasks = new TaskList();
-        tasks.add(new Task("hello", 2500, "21.12.2018", 52));
-        tasks.add(new Task("world", 2250, "12.12.2018", 360));
-        tasks.add(new Task("moi", 1230.25, "26.12.2018", 146));
-        tasks.add(new Task("kumpula", 6066, "29.11.2018", 13));
-        tasks.add(new Task("wow", 1234, "1.1.2019", 1));
-        tasks.add(new Task("early", 2225, "15.11.2018", 3));
-        tasks.add(new Task("homework", 0, "11.11.2018", 14));
-        tasks.add(new Task("infinity", 150000, "31.6.2019", 1500));
-        tasks.add(new Task("tira", 0, "13.11.2018", 200));
-        tasks.add(new Task("future", 7500, "24.5.2019", 250));
 
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(tasks.get(i).getName());
-        }
-
-        System.out.println("Current capacity: " + tasks.capacity());
-        System.out.println("Occupied: " + tasks.size());
-
-        /*
+        
         // TODO: Move the UI to a separate class
         Scanner input = new Scanner(System.in);
 
-        List<Task> tasks = new ArrayList<>();
+        //List<Task> tasks = new ArrayList<>();
 
         // TEST/DEMO DATA
         // Fastest: wow
@@ -104,7 +87,7 @@ class Main {
                 for (int i = 0; i < tasks.size(); i++) {
                     Task t = tasks.get(i);
                     if (t.getName().equals(name)) {
-                        tasks.remove(t);
+                        tasks.remove(i);
                     }
                 }
                 
@@ -116,21 +99,23 @@ class Main {
                 System.out.println("----------------");
                 System.out.println("PREPARING:");
                 
-                Collections.sort(tasks, new EDDComparator());
+                //Collections.sort(tasks, new EDDComparator());
+                Scheduler s = new Scheduler();
+                tasks = s.eddSort(tasks);
                 
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.println(tasks.get(i).getName() + " // " + tasks.get(i).getDeadline());
                 }
                 
                 System.out.println("----------------");
-                Scheduler s = new Scheduler(tasks);
-                s.mooreHodgson();
+                s.mooreHodgson(tasks);
+                
                 
             } else {
                 // ERROR FOR INVALID COMMAND
                 System.out.println("ERROR: Invalid command");
             }
         }
-         */
+        
     }
 }

@@ -1,6 +1,7 @@
 package logic;
 
 import data.Task;
+import data.TaskList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,12 +10,14 @@ import java.util.Queue;
 
 public class Scheduler {
 
-    private List<Task> tasks;
     private Queue<Task> queue;
+    private EDDComparator eddComp;
+    private SPTComparator sptComp;
 
-    public Scheduler(List<Task> tasks) {
-        this.tasks = tasks;
+    public Scheduler() {
         this.queue = new PriorityQueue<>();
+        this.eddComp = new EDDComparator();
+        this.sptComp = new SPTComparator();
     }
 
     /**
@@ -27,7 +30,7 @@ public class Scheduler {
      * @return The Scheduled list of tasks.
      */
     
-    public List<Task> mooreHodgson() {
+    public TaskList mooreHodgson(TaskList tasks) {
         System.out.println("MOORE-HODGSON:");
         // Moore-Hodgson
         // TO-DO: Implement using own data structures
@@ -60,12 +63,12 @@ public class Scheduler {
         // It does not provide assistance with the order in which they should be done.
         // However, if we sort the scheduled tasks again with in the EDD order,
         // none should be overdue.
-        List<Task> schedule = new ArrayList<>();
+        TaskList schedule = new TaskList();
         while (queue.peek() != null) {
             schedule.add(queue.poll());
         }
-        Collections.sort(schedule, new EDDComparator());
-
+        schedule = eddSort(schedule);
+        
         System.out.println("----------------");
         System.out.println("SCHEDULING COMPLETE");
         System.out.println("----------------");
@@ -81,5 +84,54 @@ public class Scheduler {
             System.out.println(t.getName() + " // " + t.getDeadline());
         }
         return schedule;
+    }
+    
+    public TaskList eddSort(TaskList list) {
+        if (list.size() <= 1) {
+            return list;
+        }
+        
+        TaskList left = new TaskList();
+        TaskList right = new TaskList();
+        
+        for (int i = 0; i < list.size(); i++) {
+            if (i < list.size() / 2) {
+                left.add(list.get(i));
+            } else {
+                right.add(list.get(i));
+            }
+        }
+        
+        left = eddSort(left);
+        right = eddSort(right);
+        
+        return eddMerge(left, right);
+    }
+    
+    public TaskList eddMerge(TaskList list1, TaskList list2) {
+        TaskList merged = new TaskList();
+        
+        while(list1.size() > 0 && list2.size() > 0) {
+            int comparison = eddComp.compare(list1.get(0), list2.get(0));
+            if (comparison <= 0) {
+                merged.add(list1.get(0));
+                list1.remove(0);
+            } else {
+                merged.add(list2.get(0));
+                list2.remove(0);
+            }
+        }
+        
+        while(list1.size() > 0) {
+            merged.add(list1.get(0));
+            list1.remove(0);
+        }
+        
+        while(list2.size() > 0) {
+            merged.add(list2.get(0));
+            list2.remove(0);
+        }
+        
+        return merged;
     }
 }
