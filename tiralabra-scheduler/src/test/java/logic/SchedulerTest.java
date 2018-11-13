@@ -1,7 +1,7 @@
 package logic;
 
 import data.Task;
-import java.util.ArrayList;
+import data.TaskList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -9,10 +9,12 @@ import org.junit.Test;
 
 public class SchedulerTest {
 
-    private List<Task> tasks;
+    private TaskList tasks;
+    private Scheduler scheduler;
 
     public SchedulerTest() {
-        this.tasks = new ArrayList<>();
+        this.tasks = new TaskList();
+        this.scheduler = new Scheduler();
     }
 
     @Before
@@ -27,8 +29,7 @@ public class SchedulerTest {
     @Test
     public void mooreHodgsonReturnsASchedule() {
         // The tasks are already in EDD order, so the test is not dependent on sorting.
-        Scheduler s = new Scheduler(tasks);
-        List<Task> schedule = s.mooreHodgson();
+        TaskList schedule = scheduler.mooreHodgson(tasks);
         // The correct order of the tasks would be: 1, 2, 3, 4 and Big dropped.
         assertEquals(tasks.get(0), schedule.get(0));
         assertEquals(tasks.get(1), schedule.get(1));
