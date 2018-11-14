@@ -2,7 +2,6 @@ package logic;
 
 import data.Task;
 import data.TaskList;
-import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;

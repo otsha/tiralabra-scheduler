@@ -1,6 +1,6 @@
 package app;
 
-import app.ui.TextInterface;
+import ui.TextInterface;
 import data.Task;
 import data.TaskList;
 import java.util.Scanner;

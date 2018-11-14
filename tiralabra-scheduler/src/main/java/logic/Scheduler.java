@@ -2,9 +2,7 @@ package logic;
 
 import data.Task;
 import data.TaskList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -24,18 +22,26 @@ public class Scheduler {
      * Minimizes the number of tasks that will be overdue using the
      * Moore-Hodgson Algorithm.
      *
-     * @todo Implementation using own data structures 
+     * @todo Implementation using own data structures
      * @todo Remove the UI printouts
-     * 
+     *
      * @return The Scheduled list of tasks.
      */
-    
     public TaskList mooreHodgson(TaskList tasks) {
+        System.out.println("PREPARING:");
+
+        tasks = mergeSort(tasks, eddComp);
+
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(tasks.get(i).getName() + " // " + tasks.get(i).getDeadline());
+        }
+
+        System.out.println("----------------");
         System.out.println("MOORE-HODGSON:");
+        
         // Moore-Hodgson
-        // TO-DO: Implement using own data structures
         int totalTime = 0;
-        List<Task> overdue = new ArrayList<>();
+        TaskList overdue = new TaskList();
 
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
@@ -67,8 +73,8 @@ public class Scheduler {
         while (queue.peek() != null) {
             schedule.add(queue.poll());
         }
-        schedule = eddSort(schedule);
-        
+        schedule = mergeSort(schedule, eddComp);
+
         System.out.println("----------------");
         System.out.println("SCHEDULING COMPLETE");
         System.out.println("----------------");
@@ -86,14 +92,36 @@ public class Scheduler {
         return schedule;
     }
     
-    public TaskList eddSort(TaskList list) {
+    /**
+     * Sorts the inputted list of Tasks to follow the Earliest Due Date scheduling heuristic using MergeSort.
+     * 
+     * @param list - The list of Tasks to be sorted
+     * @return The inputted list in the EDD order
+     */
+    public TaskList edd(TaskList list) {
+        TaskList schedule = mergeSort(list, eddComp);
+        return schedule;
+    }
+    
+    /**
+     * Sorts the inputted list of Tasks to follow the Shortest Processing Time scheduling heuristic using MergeSort.
+     * 
+     * @param list - The list of Tasks to be sorted
+     * @return The inputted list in the SPT order
+     */
+    public TaskList spt(TaskList list) {
+        TaskList schedule = mergeSort(list, sptComp);
+        return schedule;
+    }
+
+    private TaskList mergeSort(TaskList list, Comparator<Task> comp) {
         if (list.size() <= 1) {
             return list;
         }
-        
+
         TaskList left = new TaskList();
         TaskList right = new TaskList();
-        
+
         for (int i = 0; i < list.size(); i++) {
             if (i < list.size() / 2) {
                 left.add(list.get(i));
@@ -101,18 +129,18 @@ public class Scheduler {
                 right.add(list.get(i));
             }
         }
-        
-        left = eddSort(left);
-        right = eddSort(right);
-        
-        return eddMerge(left, right);
+
+        left = mergeSort(left, comp);
+        right = mergeSort(right, comp);
+
+        return merge(left, right, comp);
     }
-    
-    public TaskList eddMerge(TaskList list1, TaskList list2) {
+
+    private TaskList merge(TaskList list1, TaskList list2, Comparator<Task> comp) {
         TaskList merged = new TaskList();
-        
-        while(list1.size() > 0 && list2.size() > 0) {
-            int comparison = eddComp.compare(list1.get(0), list2.get(0));
+
+        while (list1.size() > 0 && list2.size() > 0) {
+            int comparison = comp.compare(list1.get(0), list2.get(0));
             if (comparison <= 0) {
                 merged.add(list1.get(0));
                 list1.remove(0);
@@ -121,17 +149,17 @@ public class Scheduler {
                 list2.remove(0);
             }
         }
-        
-        while(list1.size() > 0) {
+
+        while (list1.size() > 0) {
             merged.add(list1.get(0));
             list1.remove(0);
         }
-        
-        while(list2.size() > 0) {
+
+        while (list2.size() > 0) {
             merged.add(list2.get(0));
             list2.remove(0);
         }
-        
+
         return merged;
     }
 }

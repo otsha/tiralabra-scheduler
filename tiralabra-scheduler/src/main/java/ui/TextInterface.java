@@ -1,4 +1,4 @@
-package app.ui;
+package ui;
 
 import data.Task;
 import data.TaskList;
@@ -26,6 +26,8 @@ public class TextInterface {
             System.out.println("[1] Add a task");
             System.out.println("[2] Remove a task");
             System.out.println("[3] Moore-Hodgson Scheduling");
+            System.out.println("[4] Earliest Due Date Scheduling");
+            System.out.println("[5] Shortest Processing Time Scheduling");
             System.out.println("[x] Exit");
             System.out.println("----------------");
 
@@ -63,6 +65,7 @@ public class TextInterface {
                 tasks.add(t);
 
             } else if (cmd.equals("2")) {
+                // REMOVE A TASK
                 System.out.println("Task name:");
                 String name = input.nextLine();
 
@@ -77,20 +80,33 @@ public class TextInterface {
 
             } else if (cmd.equals("3")) {
                 System.out.println("This functionality is still under production.");
-                System.out.println("Currently, it is implemented using the data structures already provided by Java.");
+                System.out.println("Currently, it is implemented using some of the data structures already provided by Java.");
                 System.out.println("----------------");
-                System.out.println("PREPARING:");
 
-                //Collections.sort(tasks, new EDDComparator());
-                tasks = scheduler.eddSort(tasks);
-
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println(tasks.get(i).getName() + " // " + tasks.get(i).getDeadline());
-                }
-
-                System.out.println("----------------");
                 scheduler.mooreHodgson(tasks);
 
+            } else if (cmd.equals("4")) {
+                System.out.println("Scheduling by Earliest Due Date...");
+                System.out.println("----------------");
+                System.out.println("SCHEDULE:");
+
+                TaskList schedule = scheduler.edd(tasks);
+
+                for (int i = 0; i < schedule.size(); i++) {
+                    Task t = schedule.get(i);
+                    System.out.println(t.getName() + " // " + t.getDeadline());
+                }
+            } else if (cmd.equals("5")) {
+                System.out.println("Scheduling by Shortest Processing Time...");
+                System.out.println("----------------");
+                System.out.println("SCHEDULE:");
+                
+                TaskList schedule = scheduler.spt(tasks);
+                
+                for (int i = 0; i < schedule.size(); i++) {
+                    Task t = schedule.get(i);
+                    System.out.println(t.getName() + " // Estimated Processing Time: " + t.getTimeEstimate() + " hours");
+                }
             } else {
                 // ERROR FOR INVALID COMMAND
                 System.out.println("ERROR: Invalid command");
