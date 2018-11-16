@@ -77,7 +77,7 @@ public class TaskList {
      */
     public Task get(int index) {
         // Return null if the index is out of bounds
-        if (index >= size) {
+        if (index >= size || index < 0) {
             return null;
         }
 
@@ -101,12 +101,20 @@ public class TaskList {
     }
 
     /**
-     * Swaps the contents of two indexes in the list, provided they are valid
+     * Swaps the contents of two indexes on the list, provided they are valid
      *
      * @param index1
      * @param index2
      */
     public void swap(int index1, int index2) {
+        if (index1 == index2) {
+            return;
+        }
+        
+        if (index1 < 0 || index2 < 0) {
+            return;
+        }
+        
         if (index1 < size && index2 < size) {
             Task temp = list[index1];
             list[index1] = list[index2];
