@@ -3,7 +3,7 @@
 **Hours spent on the project:** ~9
 
 ## What I did
-This week, I finished the core functionality of the application. This meant implementing the Earliest Due Date, Shortest Processing time and hourly rate -weighed SPT heuristics. To make the code cleaner, more readable and generally 'better', I separated date handling (parsing, comparisons) and the command line text interface to their own classes.
+This week, I nearly finished the core functionality of the application. This meant implementing the Earliest Due Date and Shortest Processing Time heuristics. To make the code cleaner, more readable and generally 'better', I separated date handling (parsing, comparisons) and the command line text interface to their own classes.
 
 For EDD and SPT sorting, I decided to already implement Merge Sort as a sorting algorithm. The ```mergeSort``` and ```merge``` methods of the ```Scheduler``` class expect a list of Tasks and a comparator as their parameters, which simplifies the code, as there is no need for multiple similar methods for each heuristic.
 
@@ -15,6 +15,7 @@ Checkstyle monitoring is handled by Codacy and can be accessed with the 'code qu
 I spent a couple of hours trying to configure checkstyle, following instructions from both the 'Ohjelmistotekniikka' and 'Ohjelmistotuotanto' courses, without success - getting checkstyle itself working was not an issue, but adding suppressions always resulted in errors. In the end, I ended up configuring Codacy to do the desired checks - which I fetched from the ['Ohjelmistotekniikka' course materials](https://github.com/mluukkai/Ohjelmistotekniikka2018/blob/master/web/checkstyle.md). 
 
 ## What's next?
+- Implement hourly rate -weighed SPT
 - Implement a PriorityQueue -like data structure for Moore-Hodgson's use
 - Create a separate input validator class
 - Allow for comparisons of I.E. lateness and total value between schedules
