@@ -1,21 +1,23 @@
 package app;
 
-import ui.TextInterface;
+import data.FileAccess;
 import data.Task;
 import data.TaskList;
+import java.io.IOException;
 import java.util.Scanner;
 import logic.Scheduler;
+import ui.TextInterface;
 
 class Main {
 
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws IOException {
+
+        FileAccess access = new FileAccess("test.txt");
         Scheduler scheduler = new Scheduler();
-        TaskList tasks = new TaskList();
+        TaskList tasks = access.read();
         Scanner input = new Scanner(System.in);
 
-        //List<Task> tasks = new ArrayList<>();
-
+        /*
         // TEST/DEMO DATA
         // Fastest: wow
         // Slowest: infinity
@@ -31,9 +33,10 @@ class Main {
         tasks.add(new Task("infinity", 150000, "31.6.2019", 1500));
         tasks.add(new Task("tira", 0, "13.11.2018", 200));
         tasks.add(new Task("future", 7500, "24.5.2019", 250));
-
-        TextInterface ui = new TextInterface(scheduler, tasks, input);
-        ui.start();
+         */
         
+        TextInterface ui = new TextInterface(scheduler, tasks, input, access);
+        ui.start();
+
     }
 }

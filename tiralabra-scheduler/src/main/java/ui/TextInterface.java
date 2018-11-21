@@ -1,5 +1,6 @@
 package ui;
 
+import data.FileAccess;
 import data.Task;
 import data.TaskList;
 import java.util.Scanner;
@@ -10,11 +11,13 @@ public class TextInterface {
     private Scheduler scheduler;
     private TaskList tasks;
     private Scanner input;
+    private FileAccess access;
 
-    public TextInterface(Scheduler scheduler, TaskList tl, Scanner scanner) {
+    public TextInterface(Scheduler scheduler, TaskList tl, Scanner scanner, FileAccess access) {
         this.scheduler = scheduler;
         this.tasks = tl;
         this.input = scanner;
+        this.access = access;
     }
 
     public void start() {
@@ -22,15 +25,7 @@ public class TextInterface {
         System.out.println("== SCHEDULING ANALYZER ==");
 
         while (true) {
-            System.out.println("----------------");
-            System.out.println("[1] Add a task");
-            System.out.println("[2] Remove a task");
-            System.out.println("[3] Moore-Hodgson Scheduling");
-            System.out.println("[4] Earliest Due Date Scheduling");
-            System.out.println("[5] Shortest Processing Time Scheduling");
-            System.out.println("[6] Payment-weighted Shortest Processing Time Scheduling");
-            System.out.println("[x] Exit");
-            System.out.println("----------------");
+            System.out.println("Input command or [help] to see all commands.");
 
             String cmd = input.nextLine();
 
@@ -101,24 +96,48 @@ public class TextInterface {
                 System.out.println("Scheduling by Shortest Processing Time...");
                 System.out.println("----------------");
                 System.out.println("SCHEDULE:");
-                
+
                 TaskList schedule = scheduler.spt(tasks);
-                
+
                 for (int i = 0; i < schedule.size(); i++) {
                     Task t = schedule.get(i);
                     System.out.println(t.getName() + " // Estimated Processing Time: " + t.getTimeEstimate() + " hours");
                 }
             } else if (cmd.equals("6")) {
-                System.out.println("Scheduling by best value first...");
+                System.out.println("Scheduling by greatest hourly rate first...");
                 System.out.println("----------------");
                 System.out.println("SCHEDULE:");
-                
+
                 TaskList schedule = scheduler.wspt(tasks);
-                
+
                 for (int i = 0; i < schedule.size(); i++) {
                     Task t = schedule.get(i);
                     System.out.println(t.getName() + " // Hourly rate: " + t.getHourlyRate() + " // Deadline: " + t.getDeadline());
                 }
+            } else if (cmd.equals("v")) {
+                // List all Tasks
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println(tasks.get(i) + "\n");
+                }
+            } else if (cmd.equals("s")) {
+                // Save the current list of tasks
+                try {
+                    access.write(tasks);
+                } catch (Exception ex) {
+                    System.out.println("Error saving tasks.");
+                }
+            } else if (cmd.equals("help")) {
+                System.out.println("----------------");
+                System.out.println("[1] Add a task");
+                System.out.println("[2] Remove a task");
+                System.out.println("[3] Moore-Hodgson Scheduling");
+                System.out.println("[4] Earliest Due Date Scheduling");
+                System.out.println("[5] Shortest Processing Time Scheduling");
+                System.out.println("[6] Payment-weighted Shortest Processing Time Scheduling");
+                System.out.println("[v] View the Current Tasks");
+                System.out.println("[s] Save the Current List of Tasks");
+                System.out.println("[x] Exit");
+                System.out.println("----------------");
             } else {
                 // ERROR FOR INVALID COMMAND
                 System.out.println("ERROR: Invalid command");
