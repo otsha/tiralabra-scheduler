@@ -11,11 +11,13 @@ public class Scheduler {
     private Queue<Task> queue;
     private EDDComparator eddComp;
     private SPTComparator sptComp;
+    private WeightedSPTComparator wsptComp;
 
     public Scheduler() {
         this.queue = new PriorityQueue<>();
         this.eddComp = new EDDComparator();
         this.sptComp = new SPTComparator();
+        this.wsptComp = new WeightedSPTComparator();
     }
 
     /**
@@ -38,7 +40,7 @@ public class Scheduler {
 
         System.out.println("----------------");
         System.out.println("MOORE-HODGSON:");
-        
+
         // Moore-Hodgson
         int totalTime = 0;
         TaskList overdue = new TaskList();
@@ -91,10 +93,11 @@ public class Scheduler {
         }
         return schedule;
     }
-    
+
     /**
-     * Sorts the inputted list of Tasks to follow the Earliest Due Date scheduling heuristic using MergeSort.
-     * 
+     * Sorts the inputted list of Tasks to follow the Earliest Due Date
+     * scheduling heuristic using MergeSort.
+     *
      * @param list - The list of Tasks to be sorted
      * @return The inputted list in the EDD order
      */
@@ -102,15 +105,30 @@ public class Scheduler {
         TaskList schedule = mergeSort(list, eddComp);
         return schedule;
     }
-    
+
     /**
-     * Sorts the inputted list of Tasks to follow the Shortest Processing Time scheduling heuristic using MergeSort.
-     * 
+     * Sorts the inputted list of Tasks to follow the Shortest Processing Time
+     * scheduling heuristic using MergeSort.
+     *
      * @param list - The list of Tasks to be sorted
      * @return The inputted list in the SPT order
      */
     public TaskList spt(TaskList list) {
         TaskList schedule = mergeSort(list, sptComp);
+        return schedule;
+    }
+
+    /**
+     * Sorts the inputted list of Tasks to follow the Shortest Processing Time
+     * scheduling heuristic weighted with their payment - in other words, the
+     * greatest hourly rate gets the highest priority, while the lowest hourly
+     * rate gets the lowest priority.
+     *
+     * @param list
+     * @return The inputted list in order of hourly rate, greatest first.
+     */
+    public TaskList wspt(TaskList list) {
+        TaskList schedule = mergeSort(list, wsptComp);
         return schedule;
     }
 
@@ -140,8 +158,7 @@ public class Scheduler {
         TaskList merged = new TaskList();
 
         while (list1.size() > 0 && list2.size() > 0) {
-            int comparison = comp.compare(list1.get(0), list2.get(0));
-            if (comparison <= 0) {
+            if (comp.compare(list1.get(0), list2.get(0)) <= 0) {
                 merged.add(list1.get(0));
                 list1.remove(0);
             } else {

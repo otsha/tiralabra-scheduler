@@ -28,6 +28,7 @@ public class TextInterface {
             System.out.println("[3] Moore-Hodgson Scheduling");
             System.out.println("[4] Earliest Due Date Scheduling");
             System.out.println("[5] Shortest Processing Time Scheduling");
+            System.out.println("[6] Payment-weighted Shortest Processing Time Scheduling");
             System.out.println("[x] Exit");
             System.out.println("----------------");
 
@@ -106,6 +107,17 @@ public class TextInterface {
                 for (int i = 0; i < schedule.size(); i++) {
                     Task t = schedule.get(i);
                     System.out.println(t.getName() + " // Estimated Processing Time: " + t.getTimeEstimate() + " hours");
+                }
+            } else if (cmd.equals("6")) {
+                System.out.println("Scheduling by best value first...");
+                System.out.println("----------------");
+                System.out.println("SCHEDULE:");
+                
+                TaskList schedule = scheduler.wspt(tasks);
+                
+                for (int i = 0; i < schedule.size(); i++) {
+                    Task t = schedule.get(i);
+                    System.out.println(t.getName() + " // Hourly rate: " + t.getHourlyRate() + " // Deadline: " + t.getDeadline());
                 }
             } else {
                 // ERROR FOR INVALID COMMAND
