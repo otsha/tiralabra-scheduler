@@ -9,7 +9,7 @@ public class TaskQueue {
     private Comparator comp;
 
     public TaskQueue(int capacity, Comparator comp) {
-        this.list = new Task[capacity];
+        this.list = new Task[capacity * 2 + 1];
         this.heapSize = 0;
         this.comp = comp;
     }
