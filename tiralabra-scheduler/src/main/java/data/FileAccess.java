@@ -3,7 +3,6 @@ package data;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -32,7 +31,7 @@ public class FileAccess {
 
     /**
      * Read the tasks from the text file specified in the constructor
-     *
+     * @complexity O(n), as all tasks are read
      * @return A TaskList object containing all saved Tasks
      * @throws IOException
      */
@@ -52,6 +51,7 @@ public class FileAccess {
 
     /**
      * Save a list of tasks to a text file
+     * @complexity O(n),  as PrintWriter overwrites the entire file
      * @param list - The TaskList to be saved
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException

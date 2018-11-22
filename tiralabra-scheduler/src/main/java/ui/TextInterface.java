@@ -25,6 +25,7 @@ public class TextInterface {
         System.out.println("== SCHEDULING ANALYZER ==");
 
         while (true) {
+            System.out.println("----------------");
             System.out.println("Input command or [help] to see all commands.");
 
             String cmd = input.nextLine();

@@ -2,19 +2,19 @@ package logic;
 
 import data.Task;
 import data.TaskList;
+import data.TaskQueue;
 import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 public class Scheduler {
 
-    private Queue<Task> queue;
+    //private PriorityQueue<Task> queue;
+    private TaskQueue queue;
     private EDDComparator eddComp;
     private SPTComparator sptComp;
     private WeightedSPTComparator wsptComp;
 
     public Scheduler() {
-        this.queue = new PriorityQueue<>();
+        //this.queue = new PriorityQueue<>();
         this.eddComp = new EDDComparator();
         this.sptComp = new SPTComparator();
         this.wsptComp = new WeightedSPTComparator();
@@ -40,6 +40,7 @@ public class Scheduler {
 
         System.out.println("----------------");
         System.out.println("MOORE-HODGSON:");
+        queue = new TaskQueue(tasks.size(), sptComp);
 
         // Moore-Hodgson
         int totalTime = 0;
@@ -55,7 +56,7 @@ public class Scheduler {
             // 8-hour work days
             // Weekends and holidays could be taken into account, but that would likely
             // be very complicated.
-            // Ideally, this application should be used to schedule a 5-day work week.
+            // Ideally, this application should be used to schedule a 5-day work week on the starting day
             if (totalTime > t.daysRemaining() * 8) {
                 Task removed = queue.poll();
                 totalTime -= removed.getTimeEstimate();
@@ -83,13 +84,13 @@ public class Scheduler {
         System.out.println("OVERDUE TASKS:");
         for (int i = 0; i < overdue.size(); i++) {
             Task o = overdue.get(i);
-            System.out.println(o.getName() + " // " + o.getDeadline());
+            System.out.println(o.getName() + " // " + o.getDeadline() + " // " + o.getTimeEstimate());
         }
         System.out.println("----------------");
         System.out.println("SCHEDULE:");
         for (int i = 0; i < schedule.size(); i++) {
             Task t = schedule.get(i);
-            System.out.println(t.getName() + " // " + t.getDeadline());
+            System.out.println(t.getName() + " // " + t.getDeadline() + " // " + t.getTimeEstimate());
         }
         return schedule;
     }

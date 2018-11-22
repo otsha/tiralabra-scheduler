@@ -3,7 +3,7 @@ package data;
 import java.util.Date;
 import logic.DateHandler;
 
-public class Task implements Comparable<Task> {
+public class Task {
 
     private String name;
     private double payment;
@@ -77,24 +77,5 @@ public class Task implements Comparable<Task> {
                 + "Hourly rate: " + getHourlyRate();
 
         return s;
-    }
-
-    /**
-     * Compares the task's time estimation with another task.
-     *
-     * @todo Separate this functionality into a SPT comparator class.
-     *
-     * @param o
-     * @return 1 if task o takes longer, -1 if less, 0 if the tasks are equal.
-     */
-    @Override
-    public int compareTo(Task o) {
-        if (timeEstimate > o.getTimeEstimate()) {
-            return -1;
-        } else if (timeEstimate < o.getTimeEstimate()) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 }
