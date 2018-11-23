@@ -1,4 +1,6 @@
-# Description
+# Design
+
+*This document describes the original design of the application. For up-to-date information regarding the implementation, [read this document](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/implementation.md).*
 
 **Topic:** Task scheduling analyzer
 
