@@ -10,17 +10,10 @@ import org.junit.Test;
 public class TaskQueueTest {
 
     private TaskQueue queue;
-
-    public TaskQueueTest() {
-        this.queue = new TaskQueue(9, new SPTComparator());
-    }
-
+    
     @Before
     public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+        this.queue = new TaskQueue(9, new SPTComparator());
     }
 
     @Test
@@ -102,13 +95,13 @@ public class TaskQueueTest {
         tasks.add(new Task("infinity", 150000, "31.6.2019", 1500));
         tasks.add(new Task("tira", 0, "13.11.2018", 200));
         tasks.add(new Task("future", 7500, "24.5.2019", 250));
-        
+
         TaskQueue newQueue = new TaskQueue(tasks.size(), new SPTComparator());
         for (int i = 0; i < tasks.size(); i++) {
             newQueue.add(tasks.get(i));
         }
-        
-        while (queue.peek() != null) {
+
+        while (newQueue.peek() != null) {
             assertTrue(tasks.contains(newQueue.poll()));
         }
     }

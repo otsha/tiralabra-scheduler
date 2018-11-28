@@ -119,6 +119,14 @@ public class TaskListTest {
         list.swap(-1, 0);
         assertEquals(t1, list.get(0));
         assertEquals(t2, list.get(1));
-
+    }
+    
+    @Test
+    public void toStringReturnsASensibleRepresentation() {
+        Task t1 = new Task("testTask", 2010, "31.12.2018", 32);
+        Task t2 = new Task("testTaskTwo", 5200, "1.9.2019", 158);
+        list.add(t1);
+        list.add(t2);
+        assertEquals("[" + t1.toString() + ", " + t2.toString() + ", ]", list.toString());
     }
 }
