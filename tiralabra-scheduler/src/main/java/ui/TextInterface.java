@@ -41,7 +41,7 @@ public class TextInterface {
                 io.output().println("Payment sum:");
                 String payment = io.input().next();
 
-                io.output().println("Deadline (DD/MM/YYYY):");
+                io.output().println("Deadline (DD.MM.YYYY):");
                 String deadline = io.input().next();
 
                 io.output().println("How many hours will this task take? (Integer)");

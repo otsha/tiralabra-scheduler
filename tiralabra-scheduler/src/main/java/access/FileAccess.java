@@ -33,6 +33,7 @@ public class FileAccess {
 
     /**
      * Read the tasks from the text file specified in the constructor
+     *
      * @complexity O(n), as all tasks are read
      * @return A TaskList object containing all saved Tasks
      * @throws IOException
@@ -45,7 +46,10 @@ public class FileAccess {
 
         for (int i = 0; i < split.length; i++) {
             Task t = mapper.fromJson(split[i], Task.class);
-            readTasks.add(t);
+
+            if (t != null) {
+                readTasks.add(t);
+            }
         }
 
         return readTasks;
@@ -53,7 +57,8 @@ public class FileAccess {
 
     /**
      * Save a list of tasks to a text file
-     * @complexity O(n),  as PrintWriter overwrites the entire file
+     *
+     * @complexity O(n), as PrintWriter overwrites the entire file
      * @param list - The TaskList to be saved
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
@@ -68,5 +73,4 @@ public class FileAccess {
         writer.write(tasksAsJson);
         writer.close();
     }
-
 }

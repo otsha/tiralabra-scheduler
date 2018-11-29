@@ -19,7 +19,7 @@ class Main {
         
         Parser inputHandler = new Parser(input);
         Printer outputHandler = new Printer();
-        FileAccess access = new FileAccess("test.txt");
+        FileAccess access = new FileAccess("tasks.json");
         
         IOHandler io = new IOHandler(inputHandler, outputHandler, access);
 
