@@ -1,6 +1,9 @@
 package app;
 
 import access.FileAccess;
+import access.IOHandler;
+import access.Parser;
+import access.Printer;
 import data.Task;
 import data.TaskList;
 import java.io.IOException;
@@ -12,10 +15,16 @@ class Main {
 
     public static void main(String[] args) throws IOException {
 
-        FileAccess access = new FileAccess("test.txt");
-        Scheduler scheduler = new Scheduler();
-        TaskList tasks = access.read();
         Scanner input = new Scanner(System.in);
+        
+        Parser inputHandler = new Parser(input);
+        Printer outputHandler = new Printer();
+        FileAccess access = new FileAccess("test.txt");
+        
+        IOHandler io = new IOHandler(inputHandler, outputHandler, access);
+
+        Scheduler scheduler = new Scheduler();
+        TaskList tasks = io.file().read();
 
         /*
         // TEST/DEMO DATA
@@ -34,8 +43,7 @@ class Main {
         tasks.add(new Task("tira", 0, "13.11.2018", 200));
         tasks.add(new Task("future", 7500, "24.5.2019", 250));
          */
-        
-        TextInterface ui = new TextInterface(scheduler, tasks, input, access);
+        TextInterface ui = new TextInterface(scheduler, tasks, io);
         ui.start();
 
     }
