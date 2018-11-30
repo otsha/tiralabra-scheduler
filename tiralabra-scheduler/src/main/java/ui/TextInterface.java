@@ -22,7 +22,7 @@ public class TextInterface {
         io.output().println("== SCHEDULING ANALYZER ==");
 
         while (true) {
-            io.output().println("----------------");
+            io.output().hLine();
             io.output().println("Input command or [" + io.output().colorString("help", Color.INFO) + "] to see all commands.");
 
             String cmd = io.input().next();
@@ -49,17 +49,17 @@ public class TextInterface {
 
                 // Create a new Task object with the user-inputted data
                 Task t = io.input().buildTask(name, payment, deadline, timeEstimate);
-                
+
                 if (t != null) {
                     // DEBUG: Print out the created task's details
-                    io.output().println("----------------");
-                    io.output().println("CREATED TASK:");
+                    io.output().hLine();
+                    io.output().printSuccess("CREATED TASK:");
                     io.output().println(t);
 
                     // Add the task to the list of all tasks
                     tasks.add(t);
                 } else {
-                    io.output().printError(Error.TASKCREATIONERROR);
+                    io.output().printError(Message.TASKCREATIONERROR);
                 }
 
             } else if (cmd.equals("2")) {
@@ -74,42 +74,68 @@ public class TextInterface {
                     }
                 }
 
-                io.output().println("All tasks with the name " + name + " removed.");
+                io.output().printSuccess("All tasks with the name " + name + " removed.");
 
             } else if (cmd.equals("3")) {
                 scheduler.mooreHodgson(tasks);
             } else if (cmd.equals("4")) {
                 io.output().println("Scheduling by Earliest Due Date...");
-                io.output().println("----------------");
+                io.output().hLine();
                 io.output().println("SCHEDULE:");
+                io.output().hLine();
 
                 TaskList schedule = scheduler.edd(tasks);
 
+                // Print out the schedule on a table
+                io.output().println("Name" + "\t\t\t" + "Deadline");
+                io.output().println("----" + "\t\t\t" + "--------");
                 for (int i = 0; i < schedule.size(); i++) {
                     Task t = schedule.get(i);
-                    io.output().println(t.getName() + " // " + t.getDeadline());
+                    // io.output().println(t.getName() + " // " + t.getDeadline());
+                    if (t.getName().length() >= 8) {
+                        io.output().println(t.getName().substring(0, 7) + "...\t\t" + t.getDeadline());
+                    } else {
+                        io.output().println(t.getName() + "\t\t\t" + t.getDeadline());
+                    }
                 }
             } else if (cmd.equals("5")) {
                 io.output().println("Scheduling by Shortest Processing Time...");
-                io.output().println("----------------");
+                io.output().hLine();
                 io.output().println("SCHEDULE:");
+                io.output().hLine();
 
                 TaskList schedule = scheduler.spt(tasks);
 
+                // Print out the schedule on a table
+                io.output().println("Name" + "\t\t\t" + "Time");
+                io.output().println("----" + "\t\t\t" + "----");
                 for (int i = 0; i < schedule.size(); i++) {
                     Task t = schedule.get(i);
-                    io.output().println(t.getName() + " // Estimated Processing Time: " + t.getTimeEstimate() + " hours");
+                    // io.output().println(t.getName() + " // Estimated Processing Time: " + t.getTimeEstimate() + " hours");
+                    if (t.getName().length() >= 8) {
+                        io.output().println(t.getName().substring(0, 7) + "...\t\t" + t.getTimeEstimate());
+                    } else {
+                        io.output().println(t.getName() + "\t\t\t" + t.getTimeEstimate());
+                    }
                 }
             } else if (cmd.equals("6")) {
                 io.output().println("Scheduling by greatest hourly rate first...");
-                io.output().println("----------------");
+                io.output().hLine();
                 io.output().println("SCHEDULE:");
+                io.output().hLine();
 
                 TaskList schedule = scheduler.wspt(tasks);
 
+                // Print out the schedule on a table
+                io.output().println("Name" + "\t\t\t" + "Rate" + "\t\t\t" + "Deadline");
+                io.output().println("----" + "\t\t\t" + "----" + "\t\t\t" + "--------");
                 for (int i = 0; i < schedule.size(); i++) {
                     Task t = schedule.get(i);
-                    io.output().println(t.getName() + " // Hourly rate: " + t.getHourlyRate() + " // Deadline: " + t.getDeadline());
+                    if (t.getName().length() >= 8) {
+                        io.output().println(t.getName().substring(0, 7) + "...\t\t" + "~" + Math.round(t.getHourlyRate()) + "\t\t\t" + t.getDeadline());
+                    } else {
+                        io.output().println(t.getName() + "\t\t\t" + "~" + Math.round(t.getHourlyRate()) + "\t\t\t" + t.getDeadline());
+                    }
                 }
             } else if (cmd.equals("v")) {
                 // List all Tasks
@@ -121,7 +147,7 @@ public class TextInterface {
                 try {
                     io.file().write(tasks);
                 } catch (Exception ex) {
-                    io.output().printError(Error.TASKSAVINGERROR);
+                    io.output().printError(Message.TASKSAVINGERROR);
                 }
             } else if (cmd.equals("e")) {
                 Visualizer v = new Visualizer(io.output());
@@ -130,7 +156,7 @@ public class TextInterface {
                 io.output().printHelp();
             } else {
                 // ERROR FOR INVALID COMMAND
-                io.output().printError(Error.INVALIDCOMMANDERROR);
+                io.output().printError(Message.INVALIDCOMMANDERROR);
             }
         }
 

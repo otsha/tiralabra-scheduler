@@ -19,7 +19,7 @@ public class Visualizer {
         try {
             sleep(amount);
         } catch (Exception e) {
-            System.out.println("sleeping error");
+            printer.printError(Message.SLEEPINGERROR);
         }
     }
 
@@ -53,14 +53,14 @@ public class Visualizer {
         left = mergeSort(left, comp);
         right = mergeSort(right, comp);
 
-        System.out.println("========");
-        System.out.println("MERGING");
-        System.out.println("========");
-        System.out.println("Left:");
+        printer.println("========");
+        printer.println("MERGING");
+        printer.println("========");
+        printer.println("Left:");
         printer.printList(left, Color.SUCCESS);
-        System.out.println("Right:");
+        printer.println("Right:");
         printer.printList(right, Color.WARNING);
-        System.out.println("Merged:");
+        printer.println("Merged:");
         TaskList merged = merge(left, right, comp);
         pause(1000);
 
@@ -94,7 +94,7 @@ public class Visualizer {
             list2.remove(0);
         }
 
-        System.out.println("\n");
+        printer.println("\n");
         return merged;
     }
 

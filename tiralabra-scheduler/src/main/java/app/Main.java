@@ -16,17 +16,18 @@ class Main {
     public static void main(String[] args) throws IOException {
 
         Scanner input = new Scanner(System.in);
-        
+
         Parser inputHandler = new Parser(input);
         Printer outputHandler = new Printer();
         FileAccess access = new FileAccess("tasks.json");
-        
+
         IOHandler io = new IOHandler(inputHandler, outputHandler, access);
 
         Scheduler scheduler = new Scheduler();
+
         TaskList tasks = io.file().read();
 
-        /*
+        
         // TEST/DEMO DATA
         // Fastest: wow
         // Slowest: infinity
@@ -42,7 +43,7 @@ class Main {
         tasks.add(new Task("infinity", 150000, "31.6.2019", 1500));
         tasks.add(new Task("tira", 0, "13.11.2018", 200));
         tasks.add(new Task("future", 7500, "24.5.2019", 250));
-         */
+        
         TextInterface ui = new TextInterface(scheduler, tasks, io);
         ui.start();
 

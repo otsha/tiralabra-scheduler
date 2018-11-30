@@ -7,14 +7,12 @@ import java.util.Comparator;
 
 public class Scheduler {
 
-    //private PriorityQueue<Task> queue;
     private TaskQueue queue;
     private EDDComparator eddComp;
     private SPTComparator sptComp;
     private WeightedSPTComparator wsptComp;
 
     public Scheduler() {
-        //this.queue = new PriorityQueue<>();
         this.eddComp = new EDDComparator();
         this.sptComp = new SPTComparator();
         this.wsptComp = new WeightedSPTComparator();

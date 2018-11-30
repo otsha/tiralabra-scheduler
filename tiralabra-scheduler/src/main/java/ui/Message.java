@@ -1,13 +1,14 @@
 package ui;
 
-public enum Error {
+public enum Message {
     INVALIDCOMMANDERROR("ERROR: Invalid command."),
     TASKCREATIONERROR("ERROR: Task creation failed. Please make sure your date format is correct and that you use '.' as your decimal point."),
-    TASKSAVINGERROR("ERROR: Saving tasks failed.");
+    TASKSAVINGERROR("ERROR: Saving tasks failed."),
+    SLEEPINGERROR("ERROR: Pausing the output failed.");
     
     private String message;
     
-    private Error(String message) {
+    private Message(String message) {
         this.message = message;
     }
     
