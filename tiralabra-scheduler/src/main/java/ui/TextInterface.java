@@ -10,11 +10,13 @@ public class TextInterface {
     private Scheduler scheduler;
     private TaskList tasks;
     private IOHandler io;
+    private Visualizer visualizer;
 
-    public TextInterface(Scheduler scheduler, TaskList tl, IOHandler io) {
+    public TextInterface(Scheduler scheduler, TaskList tl, IOHandler io, Visualizer v) {
         this.scheduler = scheduler;
         this.tasks = tl;
         this.io = io;
+        this.visualizer = v;
     }
 
     public void start() {
@@ -77,7 +79,16 @@ public class TextInterface {
                 io.output().printSuccess("All tasks with the name " + name + " removed.");
 
             } else if (cmd.equals("3")) {
-                scheduler.mooreHodgson(tasks);
+                io.output().println("Scheduling to minimize the number of overdue tasks...");
+                io.output().hLine();
+                io.output().println("SCHEDULE:");
+                io.output().hLine();
+
+                TaskList schedule = scheduler.mooreHodgson(tasks);
+
+                // Print out the schedule on a table
+                io.output().printMooreHodgsonTable(schedule);
+
             } else if (cmd.equals("4")) {
                 io.output().println("Scheduling by Earliest Due Date...");
                 io.output().hLine();
@@ -87,17 +98,8 @@ public class TextInterface {
                 TaskList schedule = scheduler.edd(tasks);
 
                 // Print out the schedule on a table
-                io.output().println("Name" + "\t\t\t" + "Deadline");
-                io.output().println("----" + "\t\t\t" + "--------");
-                for (int i = 0; i < schedule.size(); i++) {
-                    Task t = schedule.get(i);
-                    // io.output().println(t.getName() + " // " + t.getDeadline());
-                    if (t.getName().length() >= 8) {
-                        io.output().println(t.getName().substring(0, 7) + "...\t\t" + t.getDeadline());
-                    } else {
-                        io.output().println(t.getName() + "\t\t\t" + t.getDeadline());
-                    }
-                }
+                io.output().printEEDTable(schedule);
+
             } else if (cmd.equals("5")) {
                 io.output().println("Scheduling by Shortest Processing Time...");
                 io.output().hLine();
@@ -107,17 +109,8 @@ public class TextInterface {
                 TaskList schedule = scheduler.spt(tasks);
 
                 // Print out the schedule on a table
-                io.output().println("Name" + "\t\t\t" + "Time");
-                io.output().println("----" + "\t\t\t" + "----");
-                for (int i = 0; i < schedule.size(); i++) {
-                    Task t = schedule.get(i);
-                    // io.output().println(t.getName() + " // Estimated Processing Time: " + t.getTimeEstimate() + " hours");
-                    if (t.getName().length() >= 8) {
-                        io.output().println(t.getName().substring(0, 7) + "...\t\t" + t.getTimeEstimate());
-                    } else {
-                        io.output().println(t.getName() + "\t\t\t" + t.getTimeEstimate());
-                    }
-                }
+                io.output().printSPTTable(schedule);
+
             } else if (cmd.equals("6")) {
                 io.output().println("Scheduling by greatest hourly rate first...");
                 io.output().hLine();
@@ -127,16 +120,8 @@ public class TextInterface {
                 TaskList schedule = scheduler.wspt(tasks);
 
                 // Print out the schedule on a table
-                io.output().println("Name" + "\t\t\t" + "Rate" + "\t\t\t" + "Deadline");
-                io.output().println("----" + "\t\t\t" + "----" + "\t\t\t" + "--------");
-                for (int i = 0; i < schedule.size(); i++) {
-                    Task t = schedule.get(i);
-                    if (t.getName().length() >= 8) {
-                        io.output().println(t.getName().substring(0, 7) + "...\t\t" + "~" + Math.round(t.getHourlyRate()) + "\t\t\t" + t.getDeadline());
-                    } else {
-                        io.output().println(t.getName() + "\t\t\t" + "~" + Math.round(t.getHourlyRate()) + "\t\t\t" + t.getDeadline());
-                    }
-                }
+                io.output().printWSPTTable(schedule);
+                
             } else if (cmd.equals("v")) {
                 // List all Tasks
                 for (int i = 0; i < tasks.size(); i++) {
@@ -150,8 +135,29 @@ public class TextInterface {
                     io.output().printError(Message.TASKSAVINGERROR);
                 }
             } else if (cmd.equals("e")) {
-                Visualizer v = new Visualizer(io.output());
-                v.edd(tasks);
+                io.output().println("================");
+                io.output().println("EXPERIMENTAL FEATURES:");
+                io.output().println("[" + io.output().colorString("1", Color.INFO) + "] to visualize EDD scheduling");
+                io.output().println("[" + io.output().colorString("2", Color.INFO) + "] to visualize SPT scheduling");
+                io.output().println("[" + io.output().colorString("3", Color.INFO) + "] to visualize Payment-weighted SPT scheduling");
+                io.output().println("[" + io.output().colorString("4", Color.INFO) + "] to visualize Moore-Hodgson scheduling");
+                io.output().println("[" + io.output().colorString("x", Color.INFO) + "] to return to the previous menu");
+
+                cmd = io.input().next();
+                if (cmd.equals("1")) {
+                    visualizer.edd(tasks);
+                } else if (cmd.equals("2")) {
+                    visualizer.spt(tasks);
+                } else if (cmd.equals("3")) {
+                    visualizer.wspt(tasks);
+                } else if (cmd.equals("4")) {
+                    visualizer.mooreHodgson(tasks);
+                } else if (cmd.equals("x")) {
+                    continue;
+                } else {
+                    io.output().printError(Message.INVALIDCOMMANDERROR);
+                }
+
             } else if (cmd.equals("help")) {
                 io.output().printHelp();
             } else {

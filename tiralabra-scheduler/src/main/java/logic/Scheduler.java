@@ -22,33 +22,19 @@ public class Scheduler {
      * Minimizes the number of tasks that will be overdue using the
      * Moore-Hodgson Algorithm.
      *
-     * @todo Implementation using own data structures
-     * @todo Remove the UI printouts
-     *
      * @return The Scheduled list of tasks.
      */
     public TaskList mooreHodgson(TaskList tasks) {
-        System.out.println("PREPARING:");
-
         tasks = mergeSort(tasks, eddComp);
-
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(tasks.get(i).getName() + " // " + tasks.get(i).getDeadline());
-        }
-
-        System.out.println("----------------");
-        System.out.println("MOORE-HODGSON:");
         queue = new TaskQueue(tasks.size(), sptComp);
 
         // Moore-Hodgson
         int totalTime = 0;
-        TaskList overdue = new TaskList();
 
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
 
             queue.add(t);
-            System.out.println("Task " + t.getName() + " scheduled."); // Log scheduled tasks
             totalTime += t.getTimeEstimate();
 
             // 8-hour work days
@@ -58,13 +44,9 @@ public class Scheduler {
             if (totalTime > t.daysRemaining() * 8) {
                 Task removed = queue.poll();
                 totalTime -= removed.getTimeEstimate();
-
-                System.out.println("Task " + removed.getName() + " removed."); // Log removed tasks (will be overdue)
-                overdue.add(removed);
             }
         }
 
-        // Print out the data
         // By default, the Moore-Hodgson algorithm does not take into account anything else
         // than that the tasks can be completed within their deadlines.
         // It does not provide assistance with the order in which they should be done.
@@ -74,22 +56,9 @@ public class Scheduler {
         while (queue.peek() != null) {
             schedule.add(queue.poll());
         }
+        
         schedule = mergeSort(schedule, eddComp);
 
-        System.out.println("----------------");
-        System.out.println("SCHEDULING COMPLETE");
-        System.out.println("----------------");
-        System.out.println("OVERDUE TASKS:");
-        for (int i = 0; i < overdue.size(); i++) {
-            Task o = overdue.get(i);
-            System.out.println(o.getName() + " // " + o.getDeadline() + " // " + o.getTimeEstimate());
-        }
-        System.out.println("----------------");
-        System.out.println("SCHEDULE:");
-        for (int i = 0; i < schedule.size(); i++) {
-            Task t = schedule.get(i);
-            System.out.println(t.getName() + " // " + t.getDeadline() + " // " + t.getTimeEstimate());
-        }
         return schedule;
     }
 
