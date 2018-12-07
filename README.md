@@ -19,3 +19,4 @@ A software project for the University of Helsinki course 'Tiralabra' (Project on
 - [Week 3](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/weekly-report-3.md)
 - [Week 4](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/weekly-report-4.md)
 - [Week 5](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/weekly-report-5.md)
+- [Week 6](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/weekly-report-6.md)
