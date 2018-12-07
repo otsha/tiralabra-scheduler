@@ -19,13 +19,13 @@
 
 ## Architecture
 
-The software follows a four-tier architecture. The top layer consists of the user interface and the applications startup functionality, which are located in packages ```ui``` and ```app``` respectively.
+The software follows a four-tier architecture. The top layer consists of the user interface, algorithm visualization and the application's startup functionality, which are located in packages ```ui``` and ```app``` respectively.
 
 The application's main functionality - scheduling - happens at the logic layer, which the user interface calls when necessary. All logical functionality is located in the ```logic``` package.
 
 The ```Task``` object and the custom data structures used by the application (```TaskList```, ```TaskQueue```) are located in the ```data``` package.
 
-Finally, the bottom layer of the application consists of the ```FileAccess``` class inside the package ```access```, which is responsible for reading and saving data to an external file. The data is stored in jSon format using the GSon library.
+Finally, the bottom layer of the application consists of I/O classes inside the package ```access```. These are compiled together in the ```IOHandler``` class, which allows for simple initialization and access to inputs, outputs and permanent storage. Inputs are handled by ```Parser```, which can be used to read user inputs and to validate Task creation. Outputs are handled by ```Printer```, which has methods for operations such as printing out lines, colors and tables. The ```FileAccess``` class is responsible for reading and saving data to an external file. The data is stored in jSon format using the GSon library.
 
 ## Data Structures
 
@@ -67,6 +67,8 @@ The TaskList's ***space complexity*** is O(2n) => O(n).
 |-----|-----|-----|
 | O(logn) | O(1) | O(logn) |
 
+The TaskList's ***space complexity*** is O(n).
+
 ## Algorithms
 
 The application implements two algorithms. Merge Sort is used to sort TaskLists to follow the Earliest Due Date and Shortest Processing Time heuristics, while minimizing the number of overdue tasks is implemented using the Moore-Hodgson Algorithm.
@@ -91,6 +93,8 @@ The Moore-Hodgson algorithm is implemented as a public method inside the ```Sche
 - Finally, sort the tasks left in the queue again in the EDD order.
 
 **Time Complexity:** EDD sort + Adding and removing each task from the queue + EDD sorting again = nlogn + n*(logn+logn) + nlogn = *O(nlogn)*
+
+**Space Complexity:** PriorityQueue + Schedule TaskList = O(3n) => *O(n)*
 
 ## References
 - Lecture materials for 'Tietorakenteet ja algoritmit', spring 2018
