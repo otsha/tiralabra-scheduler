@@ -121,7 +121,7 @@ public class TextInterface {
 
                 // Print out the schedule on a table
                 io.output().printWSPTTable(schedule);
-                
+
             } else if (cmd.equals("v")) {
                 // List all Tasks
                 for (int i = 0; i < tasks.size(); i++) {

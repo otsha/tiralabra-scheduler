@@ -145,7 +145,7 @@ public class Printer {
                 + "[" + colorString(6, Color.INFO) + "] Payment-weighted Shortest Processing Time Scheduling" + "\n"
                 + "[" + colorString("v", Color.INFO) + "] View the Current Tasks" + "\n"
                 + "[" + colorString("s", Color.INFO) + "] Save the Current List of Tasks" + "\n"
-                + "[" + colorString("e", Color.INFO) + "] Experimental: Visualize EDD scheduling" + "\n"
+                + "[" + colorString("e", Color.INFO) + "] Experimental: Visualize Scheduling    " + "\n"
                 + "[" + colorString("x", Color.INFO) + "] Exit" + "\n";
         print(help);
     }
