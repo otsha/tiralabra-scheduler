@@ -13,8 +13,10 @@
 		- [Earliest Due Date](#scheduling-by-earliest-due-date)
 		- [Shortest Processing Time](#scheduling-by-shortest-processing-time)
 		- [Hourly Rate](#scheduling-by-hourly-rate)
-	- [Experimental Features](#experimental-features)
-		- [Visualizing Earliest Due Date](#visualizing-earliest-due-date-scheduling)
+	- [Visualization](#visualization)
+		- [EDD, SPT and wSPT Scheduling](#visualizing-edd-spt-and-wspt-scheduling)
+		- [Moore-Hodgson Scheduling](#visualizing-moore-hodgson-scheduling)
+	
 
 # Getting Started
 ***To run this application, you must have Java 8 installed on your system. Moreover, the application has only been tested on Linux - you may encounter issues on other platforms***
@@ -58,7 +60,7 @@ Tasks are loaded from the automatically generated ```tasks.json``` file on start
 
 ## Scheduling
 
-*For more technical information regarding how the application handles scheduling, please refer to the [implementation document](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/implementation.md).
+*For more technical information regarding how the application handles scheduling, please refer to the [implementation document](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/implementation.md).*
 
 ### Moore-Hodgson Scheduling
 
@@ -76,8 +78,20 @@ Use the command ```5```. Your tasks will be scheduled so that the task with the 
 
 Use the command ```6```. Your tasks will be scheduled so that the task with the highest hourly rate is scheduled first. This method prioritizes financial gain over lateness.
 
-## Experimental Features
+## Visualization
 
-### Visualizing Earliest Due Date Scheduling
+Use the command ```e```. You will be shown a list of commands for visualizing the different scheduling methods offered by the application. Please note that the visualization methods artificially slow down the algorithm output in order to make them easier to follow.
 
-Use the command ```e```. This will visualize the merge sort algorithm that is used for sorting tasks by earliest due date by showing the broken down pieces of the list of tasks and how they are merged together to form a sorted list.
+### Visualizing EDD, SPT and wSPT Scheduling
+
+Use the command corresponding to the scheduling method. This will visualize the merge sort algorithm that is used for sorting tasks by earliest due date by showing the broken down pieces of the list of tasks and how they are merged together to form a sorted list.
+
+### Visualizing Moore-Hodgson Scheduling
+
+Use the command ```4```. This will visualize the steps taken by the Moore-Hodgson algorithm:
+
+- Merge sorting by earliest due date
+- Adding tasks to the schedule
+- Removing certainly overdue tasks from the schedule
+- Sorting again by earliest due date to form the final schedule
+- Printing out the overdue tasks then the final schedule
