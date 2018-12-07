@@ -5,4 +5,5 @@
 /tiralabra-scheduler/.nb-gradle-properties
 /tiralabra-scheduler/test.txt
 /tiralabra-scheduler/tasks.json
+unused-code.txt
 *.tmp
