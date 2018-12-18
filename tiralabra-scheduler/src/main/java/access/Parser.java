@@ -2,6 +2,7 @@ package access;
 
 import data.Task;
 import java.util.Scanner;
+import logic.DateHandler;
 
 public class Parser {
     
@@ -30,6 +31,12 @@ public class Parser {
      */
     public Task buildTask(String name, String payment, String deadline, String timeEstimate) {
         try {
+            DateHandler dh = new DateHandler();
+            
+            if (dh.parse(deadline) == null) {
+                return null;
+            }
+            
             return new Task(name, Double.parseDouble(payment), deadline, Integer.parseInt(timeEstimate));
         } catch (Exception e) {
             return null;

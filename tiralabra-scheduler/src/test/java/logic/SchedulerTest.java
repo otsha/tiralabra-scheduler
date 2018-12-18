@@ -2,6 +2,7 @@ package logic;
 
 import data.Task;
 import data.TaskList;
+import java.util.Random;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,20 +19,22 @@ public class SchedulerTest {
     @Before
     public void setUp() {
         this.tasks = new TaskList();
-        tasks.add(new Task("testTask1", 2500, "21.11.2018", 32)); // 72.13
-        tasks.add(new Task("testTask2", 1230, "30.11.2018", 72)); // 17.08
-        tasks.add(new Task("testTask3", 2750, "17.12.2018", 15)); // 183.33
-        tasks.add(new Task("testTask4", 3000, "2.1.2019", 50)); // 60
-        tasks.add(new Task("testTask5", 3500, "20.11.2018", 1500)); // 2.33
+        tasks.add(new Task("testTask1", 2500, "21.11.2019", 32)); // 72.13
+        tasks.add(new Task("testTask2", 1230, "30.11.2019", 72)); // 17.08
+        tasks.add(new Task("testTask3", 2750, "17.12.2019", 15)); // 183.33
+        tasks.add(new Task("testTask4", 3000, "2.1.2020", 50)); // 60
+        tasks.add(new Task("testTask5", 3500, "20.11.2019", 10000)); // 2.33
     }
 
     @Test
     public void mooreHodgsonReturnsASchedule() {
         TaskList schedule = scheduler.mooreHodgson(tasks);
-        // TODO FIX THIS
-        assertEquals(tasks.get(2), schedule.get(0));
-        assertEquals(tasks.get(3), schedule.get(1));
-        assertEquals(2, schedule.size());
+        // Test that the unfinishable task (5) will be thrown out
+        assertEquals(tasks.get(0), schedule.get(0));
+        assertEquals(tasks.get(1), schedule.get(1));
+        assertEquals(tasks.get(2), schedule.get(2));
+        assertEquals(tasks.get(3), schedule.get(3));
+        assertEquals(4, schedule.size());
     }
 
     @Test

@@ -18,15 +18,33 @@ public class DateHandlerTest {
     }
 
     @Test
-    public void validateReturnsTheCorrectDateIfTheStringIsValid() throws ParseException {
+    public void parseReturnsTheCorrectDateIfTheStringIsValid() throws ParseException {
         String dateAsString = "13.12.2018";
-        assertEquals(dateFormat.parse(dateAsString), handler.validate(dateAsString));
+        assertEquals(dateFormat.parse(dateAsString), handler.parse(dateAsString));
     }
 
     @Test
-    public void validateReturnsNullIfTheStringIsInvalid() {
+    public void parseReturnsNullIfTheStringContainsInvalidCharacters() {
         String invalidDate = "xx.23.2188";
-        assertEquals(null, handler.validate(invalidDate));
+        assertEquals(null, handler.parse(invalidDate));
+    }
+
+    @Test
+    public void parseReturnsNullIfTheYearIsBefore1970() {
+        String invalidDate = "1.1.1969";
+        assertEquals(null, handler.parse(invalidDate));
+    }
+
+    @Test
+    public void parseReturnsNullIfTheMonthIsInvalid() {
+        String invalidDate = "1.13.2019";
+        assertEquals(null, handler.parse(invalidDate));
+    }
+
+    @Test
+    public void parseReturnsNullIfTheDayIsInvalid() {
+        String invalidDate = "31.2.2019";
+        assertEquals(null, handler.parse(invalidDate));
     }
 
     @Test

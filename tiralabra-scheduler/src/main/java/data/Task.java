@@ -42,7 +42,7 @@ public class Task {
      */
     public Date deadlineAsDate() {
         DateHandler dh = new DateHandler();
-        return dh.validate(deadline);
+        return dh.parse(deadline);
     }
 
     /**

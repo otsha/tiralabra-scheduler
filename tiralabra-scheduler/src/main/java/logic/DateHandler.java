@@ -22,13 +22,96 @@ public class DateHandler {
      *
      * @return The inputted string as Date.
      */
-    public Date validate(String dateAsString) {
-        try {
-            Date d = dateFormat.parse(dateAsString);
-            return d;
-        } catch (ParseException e) {
-            return null;
+    public Date parse(String dateAsString) {
+        if (validate(dateAsString)) {
+            try {
+                Date d = dateFormat.parse(dateAsString);
+                return d;
+            } catch (ParseException e) {
+                return null;
+            }
         }
+
+        return null;
+    }
+
+    private boolean validate(String dateAsString) {
+        String[] split = dateAsString.split("\\.");
+
+        // Check that the format is correct
+        if (split.length != 3) {
+            return false;
+        }
+
+        // Validate the month and the year
+        if (!validateMonth(split[1]) || !validateYear(split[2])) {
+            return false;
+        }
+
+        // validate the day
+        if (!validateDay(split[0], split[1])) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateDay(String day, String month) {
+        if (day.length() > 2) {
+            return false;
+        }
+
+        try {
+            int dayAsNumber = Integer.parseInt(day);
+            int monthAsNumber = Integer.parseInt(month);
+
+            if (dayAsNumber < 1) {
+                return false;
+            } else if (monthAsNumber == 2) {
+                return !(dayAsNumber > 28);
+            } else if (monthAsNumber == 1 || monthAsNumber == 3 || monthAsNumber == 5 || monthAsNumber == 7
+                    || monthAsNumber == 8 || monthAsNumber == 10 || monthAsNumber == 12) {
+                return !(dayAsNumber > 31);
+            } else {
+                return !(dayAsNumber > 30);
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean validateMonth(String month) {
+        if (month.length() > 2) {
+            return false;
+        }
+
+        try {
+            int asNumber = Integer.parseInt(month);
+
+            if (asNumber < 1 || asNumber > 12) {
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateYear(String year) {
+        try {
+            int asNumber = Integer.parseInt(year);
+
+            if (asNumber < 1970) {
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -54,7 +137,8 @@ public class DateHandler {
     }
 
     /**
-     * Calculates the number of days between the inputted date and the current date
+     * Calculates the number of days between the inputted date and the current
+     * date
      *
      * @param d - The date to be compared
      * @return Number of days until the inputted date

@@ -43,7 +43,7 @@ class Main {
         tasks.add(new Task("wow", 1234, "1.1.2019", 1));
         tasks.add(new Task("early", 2225, "15.1.2019", 3));
         tasks.add(new Task("homework", 0, "13.2.2019", 14));
-        tasks.add(new Task("infinity", 150000, "31.6.2019", 1500));
+        tasks.add(new Task("infinity", 150000, "30.6.2019", 1500));
         tasks.add(new Task("tira", 0, "13.11.2018", 200));
         tasks.add(new Task("future", 7500, "24.5.2019", 250));
         
