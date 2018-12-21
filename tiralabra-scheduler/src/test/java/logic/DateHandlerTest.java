@@ -22,10 +22,16 @@ public class DateHandlerTest {
         String dateAsString = "13.12.2018";
         assertEquals(dateFormat.parse(dateAsString), handler.parse(dateAsString));
     }
+    
+    @Test
+    public void parseReturnsNullIfTheDateFormatIsIncorrect() throws ParseException {
+        String dateAsString = "14/2/2019";
+        assertEquals(null, handler.parse(dateAsString));
+    }
 
     @Test
     public void parseReturnsNullIfTheStringContainsInvalidCharacters() {
-        String invalidDate = "xx.23.2188";
+        String invalidDate = "xx.aa.bcde";
         assertEquals(null, handler.parse(invalidDate));
     }
 
@@ -44,6 +50,12 @@ public class DateHandlerTest {
     @Test
     public void parseReturnsNullIfTheDayIsInvalid() {
         String invalidDate = "31.2.2019";
+        assertEquals(null, handler.parse(invalidDate));
+    }
+    
+    @Test
+    public void parseReturnsNullIfDayIsTooLong() {
+        String invalidDate = "999.2.2019";
         assertEquals(null, handler.parse(invalidDate));
     }
 
