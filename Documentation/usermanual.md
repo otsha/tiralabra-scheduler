@@ -2,6 +2,7 @@
 
 # Index
 - [Getting Started](#getting-started)
+	- [Running from a .jar](#running-from-a-jar)
 	- [Running with Gradle](#running-with-gradle)
 - [Using the Application](#using-the-application)
 	- [Managing Tasks](#managing-tasks)
@@ -20,6 +21,25 @@
 
 # Getting Started
 ***To run this application, you must have Java 8 installed on your system. Moreover, the application has only been tested on Linux - you may encounter issues on other platforms***
+
+## Running from a .jar
+You can either download the latest version on the ['Releases' page](https://github.com/otsha/tiralabra-scheduler/releases) or generate your own .jar by using the command 
+```
+gradle shadowJar
+```
+in the application's root folder.
+
+***Note**: If you do not have Gradle installed on your system, the application files include wrappers. Try using ```./gradlew``` instead of ```gradle```.*
+
+The generated .jar file will be located in
+```
+build/libs/tiralabra-scheduler-all.jar
+```
+
+Once you have a .jar file, you can execute it with
+```
+java -jar NAME_OF_YOUR_FILE.jar
+```
 
 ## Running with Gradle
 Navigate to the root folder of the Gradle project (```/tiralabra-scheduler/tiralabra-scheduler```). To run the application, use the command
