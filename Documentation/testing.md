@@ -63,7 +63,7 @@ The performance tests were performed by creating a custom ```Main.java``` and us
 
 #### Preparation
 
-- Create a ```Main.java``` that creates **n** tasks and saves them to a file.
+- Firstly, create a ```Main.java``` that generates **n** tasks and saves them to a file.
 
 ```java
 TaskList tasks = new TaskList();
@@ -81,49 +81,56 @@ for (int i = 0; i < n; i++) {
 		"test",
 		Math.abs(r.nextDouble() * r.nextInt(10000)),
 		(r.nextInt(27) + 1) + "." + (r.nextInt(11) + 1) + "." + (r.nextInt(10) + 2019),
-		r.nextInt(300))
+		r.nextInt(3000))
 	);
 }
 
 FileAccess access = new FileAccess("tasks.json");
 access.write(tasks);
 ```
-
-- Replace the ```Main.java``` with one that reads the generated tasks from the file and adds them to a TaskList.
-
-```java
-FileAccess access = new FileAccess("tasks.json");
-TaskList tasks = access.read();
-```
-
-- Build once, then run 10 times and form an average initialization time used as a zero value for the actual tests.
+- This is repeated for each value of n (10, 100, 1000, 10000). The same n-sized list is used for each algorithm for fair comparison.
 
 #### Tests
 
-- Now, *edit* the Main so that after the TaskList is built, one of the scheduling algorithms is ran.
+- Replace the ```Main``` so that the previously generated list of tasks is read from the file, after which one of the scheduling algorithms is ran.
+- The running time is logged using Java's ```System.nanoTime()```
+	- At the start of the run
+	- After the TaskList is read from the file
+	- After the algorithm is finished
 
 ```java
+long start = System.nanoTime();
+
 FileAccess access = new FileAccess("tasks.json");
 TaskList tasks = access.read();
+
+long loaded = System.nanoTime();
+
 Scheduler s = new Scheduler();
 s.ALGORITHM_HERE(tasks);
+
+long done = System.nanoTime();
+System.out.println("Algorithm runtime: " + (done - loaded) + " nanoseconds");
 ```
 
-- Build once (after cleaning), then run 10 times, each time deducing the zero value from the running time, and form an average running time. This is the performance of the algorithm.
-- Repeat for all 4 scheduling methods.
+- Clean and build once, then run 10 times and collect the reported values.
+- Repeat for all 4 scheduling methods and each value of n (10, 100, 1000, 10000).
 
 ### Results
 
-- ***NOTE:** For the n = 100 000 test the tasks were not saved into a permanent file, as it did not seem to be possible. Instead, the zero value is the average time taken to generate a hundred thousand tasks. Thus, the 'init' row does not represent a unified initialization technique, but rather a method of zeroing for each column.*
+***[Spreadsheet of the raw test data](https://docs.google.com/spreadsheets/d/1lkpz7VGbgFzrs4uXh5jAJO8rxlQXugSaENhyu46kJRs/edit?usp=sharing)***
 
-| Algorithm | n = 10 | n = 100 | n = 1000 | n = 10 000 | n = 100 000 |
-|-----------|--------|---------|----------|------------|-------------|
-| Init | 0 | 0 | 0 | 0 | 0 |
-| EED | 0 | 0 | 0 | 1.5s | 14s |
-| SPT | 0 | 0 | 0 | 0 | 4s |
-| wSPT| 0 | 0 | 0 | 0 | 4s | 
-| Moore-Hodgson| 0 | 0 | 0.81s | 2s | 14.1s |
+***Note:** The collected data has been converted from nanoseconds to milliseconds for better readability. The following graph and table are based on average reported runtimes.*
 
-Even though the run times up to n = 1000 were still below 0 seconds, the run time did slow down to the point where it was noticeably slower than for smaller values of n. Unfortunately, Gradle only reports running times in seconds. A millisecond comparison would have been much more enlightening.
+| Algorithm | n = 10 | n = 100 | n = 1000 | n = 10 000 |
+|-----------|--------|---------|----------|------------|
+| EDD | 42.34 ms | 220.46 ms | 457.49 ms | 1415.76 ms |
+| SPT | 1.62 ms | 2.41 ms | 11.87 ms | 104.47 ms |
+| wSPT| 1.81 ms | 2.52 ms | 12.59 ms | 88.65 ms |
+| Moore-Hodgson| 54.06 ms | 193.31 ms | 405.09 ms | 1345.89 ms |
 
-Another interesting phenomenon is that even though all the heuristics (EDD, SPT and wSPT) use the same Merge Sort algorithm (no multiple implementations), EDD scheduling is slower. This might be due to Java's native Date class's comparisons being slower, or due to not enough variation in the test data in terms of processing times. Of these two the latter does seem more likely - after all, we're setting the due dates to (almost) any day in the next 10 years, but the processing times are at most 300 hours.
+![Performance test results as a bar chart](https://raw.githubusercontent.com/otsha/tiralabra-scheduler/master/Documentation/Performance.png)
+
+An interesting phenomenon is that even though all the heuristics (EDD, SPT and wSPT) use the exact same Merge Sort methods (inside the ```logic.Scheduler``` class, EDD scheduling is slower. This might be due to Java's native Date class's comparisons being slower, or due to not enough variation in the test data in terms of processing times. However, the latter seems less likely as I tried using several different limits for processing limit generation with similar results each time.
+
+Another detail to note is that my implementation of the Moore-Hodgson Algorithm uses EDD sort twice, once as a prerequisite to the actual algorithm (the tasks must be inputted in the EDD order) and again after the optimal list of tasks is generated (to decide the final schedule). Interestingly, it still seems to take less time than simply just EDD sorting with every sample size.
