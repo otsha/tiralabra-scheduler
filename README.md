@@ -7,6 +7,9 @@ A software project for the University of Helsinki course 'Tiralabra' (Project on
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d0ab491418a2477d99c32a23c1d9e566)](https://www.codacy.com/app/otsha/tiralabra-scheduler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=otsha/tiralabra-scheduler&amp;utm_campaign=Badge_Grade)
 
+## Releases
+- [Final Release](https://github.com/otsha/tiralabra-scheduler/releases/tag/0.1)
+
 ## Documentation
 - [Original Design Document](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/description.md)
 - [Implementation](https://github.com/otsha/tiralabra-scheduler/blob/master/Documentation/implementation.md)
