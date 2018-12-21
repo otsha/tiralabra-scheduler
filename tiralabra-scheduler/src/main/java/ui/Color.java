@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ * Color codes used by the application
+ */
 public enum Color {
     SUCCESS("\u001B[32m"), 
     ERROR("\u001B[31m"), 
@@ -11,7 +14,7 @@ public enum Color {
     private Color(String colorCode) {
         this.colorCode = colorCode;
     }
-
+    
     public String getCode() {
         return colorCode;
     }

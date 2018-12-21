@@ -15,6 +15,7 @@
 	- [Merge Sort](#merge-sort)
 	- [Moore-Hodgson](#moore-hodgson)
 		- [How it works](#how-it-works)
+- [Improvements](#improvements)
 - [References](#references)
 
 ## Architecture
@@ -95,6 +96,12 @@ The Moore-Hodgson algorithm is implemented as a public method inside the ```Sche
 **Time Complexity:** EDD sort + Adding and removing each task from the queue + EDD sorting again = nlogn + n*(logn+logn) + nlogn = *O(nlogn)*
 
 **Space Complexity:** PriorityQueue + Schedule TaskList = O(3n) => *O(n)*
+
+## Improvements
+- The current implementation of the UI is a rat's nest - spaghetti code at its finest. A more elegant solution could be achieved using, for example, the command pattern. Unfortunately I learned of its existence late into the project, and implementation would have required heavy refactoring.
+- The current way of handling Dates (parsing, validation, time conversions) is complicated and not too accurate (mostly due to the limited working hours that the application implicates). I should have worked with my own calendar/date implementation from the very beginning.
+- To improve the usability and the visual outlook of the application, the user interface could be implemented using JavaFX (or another similar library).
+- The visualization could be improved in numerous ways - the current way of visualizing merge sort is very crude.
 
 ## References
 - Lecture materials for 'Tietorakenteet ja algoritmit', spring 2018

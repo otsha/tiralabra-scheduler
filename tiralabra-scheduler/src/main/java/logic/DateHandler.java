@@ -20,7 +20,7 @@ public class DateHandler {
      *
      * @param dateAsString
      *
-     * @return The inputted string as Date.
+     * @return The inputted string as Date, null if not valid
      */
     public Date parse(String dateAsString) {
         if (validate(dateAsString)) {

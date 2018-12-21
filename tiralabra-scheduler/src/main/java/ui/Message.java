@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ * Error messages used by the application
+ */
 public enum Message {
     INVALIDCOMMANDERROR("ERROR: Invalid command."),
     TASKCREATIONERROR("ERROR: Task creation failed. Please make sure your date format is correct and that you use '.' as your decimal point."),

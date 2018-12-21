@@ -14,7 +14,7 @@ public class Parser {
     
     /**
      * Reads the next line that the Scanner is offering
-     * @return 
+     * @return the next line inputted by the user
      * @see java.util.Scanner#nextLine() 
      */
     public String next() {

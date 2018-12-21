@@ -53,7 +53,13 @@ public class Printer {
         println("\n");
     }
 
-    public void printEEDTable(TaskList list) {
+    /**
+     * Prints a table with relevant information to the EDD order (name,
+     * deadline)
+     *
+     * @param list The TaskList to be printed out
+     */
+    public void printEDDTable(TaskList list) {
         println("Name" + "\t\t\t" + "Deadline");
         println("----" + "\t\t\t" + "--------");
         for (int i = 0; i < list.size(); i++) {
@@ -66,6 +72,12 @@ public class Printer {
         }
     }
 
+    /**
+     * Prints a table containing information relevant to the SPT order (name,
+     * processing time)
+     *
+     * @param list The TaskList to be printed out
+     */
     public void printSPTTable(TaskList list) {
         println("Name" + "\t\t\t" + "Time");
         println("----" + "\t\t\t" + "----");
@@ -79,6 +91,12 @@ public class Printer {
         }
     }
 
+    /**
+     * Prints a table containing information relevant to the wSPT order (name,
+     * rate, deadline)
+     *
+     * @param list The TaskList to be printed out
+     */
     public void printWSPTTable(TaskList list) {
         println("Name" + "\t\t\t" + "Rate" + "\t\t\t" + "Deadline");
         println("----" + "\t\t\t" + "----" + "\t\t\t" + "--------");
@@ -92,6 +110,12 @@ public class Printer {
         }
     }
 
+    /**
+     * Prints a table containing information relevant to the Moore-Hodgson order
+     * (name, deadline, processing time)
+     *
+     * @param list The TaskList to be printed out
+     */
     public void printMooreHodgsonTable(TaskList list) {
         println("Name" + "\t\t\t" + "Deadline" + "\t\t\t" + "Time");
         println("----" + "\t\t\t" + "--------" + "\t\t\t" + "----");

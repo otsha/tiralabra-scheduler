@@ -98,7 +98,7 @@ public class TextInterface {
                 TaskList schedule = scheduler.edd(tasks);
 
                 // Print out the schedule on a table
-                io.output().printEEDTable(schedule);
+                io.output().printEDDTable(schedule);
 
             } else if (cmd.equals("5")) {
                 io.output().println("Scheduling by Shortest Processing Time...");

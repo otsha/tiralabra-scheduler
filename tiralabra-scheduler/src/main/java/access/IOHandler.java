@@ -14,7 +14,7 @@ public class IOHandler {
     
     /**
      * Returns the Parser handling inputs
-     * @return 
+     * @return The input 'device'
      * @see access.Parser
      */
     public Parser input() {
@@ -23,7 +23,7 @@ public class IOHandler {
     
     /**
      * Returns the Parser handling outputs
-     * @return 
+     * @return The output 'device'
      * @see access.Printer
      */
     public Printer output() {
@@ -32,7 +32,7 @@ public class IOHandler {
     
     /**
      * Returns the FileAccess handling external files
-     * @return 
+     * @return The file controller
      * @see access.FileAccess
      */
     public FileAccess file() {
